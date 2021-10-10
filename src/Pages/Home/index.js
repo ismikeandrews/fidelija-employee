@@ -20,6 +20,7 @@ import { styles } from './home.elements';
 import { Backdrop, Snackbar, AppBar, NumberFormat } from '../../Components';
 import { UserService } from '../../Services';
 
+
 const Home = () => {
     const [isLoading, setIsLoading] = useState(false);
     const [toggleFailureSnack, setToggleFailureSnack] = useState(false);
