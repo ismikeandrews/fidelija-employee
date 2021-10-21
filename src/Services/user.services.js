@@ -9,9 +9,13 @@ const UserService = {
         return axios.post(enpoint, data, AuthStr)
     },
     async registerPoints(data){
-        const enpoint = `${url}api/points`
+        const enpoint = `${url}api/points/stablishment`
         return axios.post(enpoint, data, AuthStr);
     },
+    async getUser(id){
+        const endpoint = `${url}api/user/search/${id}`;
+        return axios.get(endpoint, AuthStr);
+    }
 }
 
 export default UserService;

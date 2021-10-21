@@ -1,11 +1,11 @@
 import { makeStyles } from '@material-ui/core';
-import { red } from '@material-ui/core/colors';
+import { green } from '@material-ui/core/colors';
 export const styles = makeStyles(theme => ({
     button: {
         color: theme.palette.common.white,
-        backgroundColor: red[400],
+        backgroundColor: green[400],
         '&:hover': {
-            backgroundColor: red[500],
+            backgroundColor: green[500],
         },
     },
     paper: {

@@ -16,9 +16,10 @@ import {
     Divider,
 } from '@material-ui/core';
 import { CameraAlt, AccountBox, MonetizationOn} from '@material-ui/icons';
+import ReceiptIcon from '@material-ui/icons/Receipt';
 import { styles } from './home.elements';
 import { Backdrop, Snackbar, AppBar, NumberFormat } from '../../Components';
-import { UserService } from '../../Services';
+import { UserService, AuthService } from '../../Services';
 
 
 const Home = () => {
@@ -29,6 +30,7 @@ const Home = () => {
     const [user, setUser] = useState(null);
     const [cpf, setCpf] = useState('');
     const [ammount, setAmmount] = useState('');
+    const [reference, setReference] = useState('')
     const classes = styles();
     const inputFile = useRef(null);
 
@@ -53,7 +55,12 @@ const Home = () => {
 
     const submitScore = async () => {
         setIsLoading(false);
-        const data = {id: user.id, ammount}
+        const data = {
+            user_id: user.id, 
+            ammount: ammount,
+            reference: reference,
+            employeeId: AuthService.getLoggedUser().id
+        }
         try {
             await UserService.registerPoints(data)
             setUser(null)
@@ -72,7 +79,7 @@ const Home = () => {
 
     return (
         <div>
-            <AppBar>Pontuar usuário</AppBar>
+            <AppBar/>
             <Backdrop open={isLoading}/>
             <Snackbar toggleSnack={toggleFailureSnack || toggleSuccessSnack} time={4500} onClose={() => {setToggleFailureSnack(false); setToggleSuccessSnack(false)}} color={toggleSuccessSnack ? "success" : "warning"}>
                 {infoMsg}
@@ -91,6 +98,7 @@ const Home = () => {
                                 )}
                             </InputMask>
                             <TextField fullWidth variant="outlined" label="Valor da compra" margin="normal" name="valor" value={ammount} onChange={e => setAmmount(e.target.value)} InputProps={{inputComponent: NumberFormat}}/>
+                            <TextField fullWidth variant="outlined" label="Referência" margin="normal" name="valor" value={reference} onChange={e => setReference(e.target.value)}/>
                         </Paper>
                     </Grid>
                     {user && (
@@ -113,6 +121,14 @@ const Home = () => {
                                     </ListItem>
                                     <ListItem>
                                         <ListItemAvatar>
+                                            <Avatar style={{backgroundColor: "#604bd2"}}>
+                                                <ReceiptIcon/>
+                                            </Avatar>
+                                        </ListItemAvatar>
+                                        <ListItemText>{reference || '- - -'}</ListItemText>
+                                    </ListItem>
+                                    <ListItem>
+                                        <ListItemAvatar>
                                             <Avatar style={{backgroundColor: "rgb(38 165 43)"}}>
                                                 <MonetizationOn />
                                             </Avatar>
@@ -121,7 +137,7 @@ const Home = () => {
                                     </ListItem>
                                 </List>
                                 <div style={{padding: "10px"}}>
-                                    <Button className={classes.button} variant="contained" color="inherit" fullWidth size="medium" disabled={ammount === ''} onClick={submitScore}>Pontuar</Button>
+                                    <Button className={classes.button} variant="contained" color="inherit" fullWidth size="medium" disabled={ammount === '' || reference === ''} onClick={submitScore}>Pontuar</Button>
                                 </div>
                             </Paper>
                         </Grid>
