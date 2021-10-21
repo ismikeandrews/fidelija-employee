@@ -54,7 +54,7 @@ const AuthService = {
         const data = localStorage.getItem("authData");
         if (data) {
             localStorage.removeItem("authData");
-            localStorage.removeItem("userData")
+            localStorage.removeItem("userData");
             window.location.replace("/");
         }
     },

@@ -37,7 +37,7 @@ const Login = () => {
         try {
             const authRes = await AuthService.authenticate(data);
             const employeeRes = await AuthService.getEmployee(authRes.data)
-            if(employeeRes.data.employeeInfo){
+            if(employeeRes.data.employeeInfo || employeeRes.data.stablishment){
                 await AuthService.setLoggedUser(employeeRes.data, authRes.data);
                 setIsLoading(false);
                 window.location.replace("/home")
