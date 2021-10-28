@@ -13,9 +13,7 @@ import {
     TextField,
     Container
 } from '@material-ui/core';
-import { MonetizationOn} from '@material-ui/icons';
-import AccountBalanceIcon from '@material-ui/icons/AccountBalance';
-import ReceiptIcon from '@material-ui/icons/Receipt';
+import { AccountBox, MonetizationOn, AccountBalance, Receipt } from '@material-ui/icons';
 import { styles } from './userSearch.elements';
 
 const UserSearch = () => {
@@ -28,6 +26,7 @@ const UserSearch = () => {
     const [isLoading, setIsLoading] = useState(false);
     const { id } = useParams();
     const classes = styles();
+    
     useEffect(() => {
         fetchData()
     }, [])
@@ -76,6 +75,10 @@ const UserSearch = () => {
             {user && (
                 <Container>
                     <Paper variant="outlined">
+                        <div className={classes.inputs}>
+                            <TextField fullWidth variant="outlined" label="Valor da compra" margin="normal" name="valor" value={ammount} onChange={e => setAmmount(e.target.value)}/>
+                            <TextField fullWidth variant="outlined" label="Referencia" margin="normal" name="valor" value={reference} onChange={e => setReference(e.target.value)}/>
+                        </div>
                         <List dense={false}>
                             <ListItem>
                                 <ListItemAvatar>
@@ -86,7 +89,15 @@ const UserSearch = () => {
                             <ListItem>
                                 <ListItemAvatar>
                                     <Avatar style={{backgroundColor: "#604bd2"}}>
-                                        <ReceiptIcon/>
+                                        <AccountBox />
+                                    </Avatar>
+                                </ListItemAvatar>
+                                <ListItemText>{user.cpf}</ListItemText>
+                            </ListItem>
+                            <ListItem>
+                                <ListItemAvatar>
+                                    <Avatar style={{backgroundColor: "#604bd2"}}>
+                                        <Receipt/>
                                     </Avatar>
                                 </ListItemAvatar>
                                 <ListItemText>{reference || "- - -"}</ListItemText>
@@ -94,7 +105,7 @@ const UserSearch = () => {
                             <ListItem>
                                 <ListItemAvatar>
                                     <Avatar style={{backgroundColor: "#604bd2"}}>
-                                        <AccountBalanceIcon/>
+                                        <AccountBalance/>
                                     </Avatar>
                                 </ListItemAvatar>
                                 <ListItemText>{user.stablishment_points || "- - -"}</ListItemText>
@@ -108,12 +119,8 @@ const UserSearch = () => {
                                 <ListItemText>{Math.ceil(ammount * 5)}</ListItemText>
                             </ListItem>
                         </List>
-                        <div className={classes.inputs}>
-                            <TextField fullWidth variant="outlined" label="Valor da compra" margin="normal" name="valor" value={ammount} onChange={e => setAmmount(e.target.value)}/>
-                            <TextField fullWidth variant="outlined" label="Referencia" margin="normal" name="valor" value={reference} onChange={e => setReference(e.target.value)}/>
-                        </div>
                         <div style={{padding: "10px"}}>
-                            <Button className={classes.button} variant="contained" color="inherit" fullWidth size="medium" disabled={ammount === '' || reference === ''} onClick={submitScore}>Pontuar</Button>
+                            <Button className={classes.button} variant="contained" color="inherit" fullWidth size="medium" disabled={ammount === '' || reference === ''} onClick={() => submitScore()}>Pontuar</Button>
                         </div>
                     </Paper>
                 </Container>

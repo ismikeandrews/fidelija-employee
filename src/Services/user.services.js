@@ -13,7 +13,7 @@ const UserService = {
         return axios.post(enpoint, data, AuthStr);
     },
     async getUser(id){
-        const endpoint = `${url}api/user/search/${id}`;
+        const endpoint = `${url}api/user/${id}`;
         return axios.get(endpoint, AuthStr);
     }
 }

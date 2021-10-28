@@ -15,8 +15,7 @@ import {
     Typography,
     Divider,
 } from '@material-ui/core';
-import { CameraAlt, AccountBox, MonetizationOn} from '@material-ui/icons';
-import ReceiptIcon from '@material-ui/icons/Receipt';
+import { CameraAlt, AccountBox, MonetizationOn, Receipt, AccountBalance } from '@material-ui/icons';
 import { styles } from './home.elements';
 import { Backdrop, Snackbar, AppBar, NumberFormat } from '../../Components';
 import { UserService, AuthService } from '../../Services';
@@ -39,6 +38,7 @@ const Home = () => {
         const data = {cpf}   
         try {
             const res = await UserService.getUserByCpf(data)
+            console.log(res.data)
             setUser(res.data)
             setIsLoading(false)
             if(!res.data && cpf.length > 0){
@@ -66,6 +66,7 @@ const Home = () => {
             setUser(null)
             setAmmount('');
             setCpf('')
+            setReference('')
             setIsLoading(false);
             setInfoMsg("Usuário pontuado com sucesso.");
             setToggleSuccessSnack(true);
@@ -122,10 +123,18 @@ const Home = () => {
                                     <ListItem>
                                         <ListItemAvatar>
                                             <Avatar style={{backgroundColor: "#604bd2"}}>
-                                                <ReceiptIcon/>
+                                                <Receipt/>
                                             </Avatar>
                                         </ListItemAvatar>
                                         <ListItemText>{reference || '- - -'}</ListItemText>
+                                    </ListItem>
+                                    <ListItem>
+                                        <ListItemAvatar>
+                                            <Avatar style={{backgroundColor: "#604bd2"}}>
+                                                <AccountBalance/>
+                                            </Avatar>
+                                        </ListItemAvatar>
+                                        <ListItemText>{user.stablishment_points || "- - -"}</ListItemText>
                                     </ListItem>
                                     <ListItem>
                                         <ListItemAvatar>
