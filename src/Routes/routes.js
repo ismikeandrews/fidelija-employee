@@ -15,7 +15,7 @@ const Routes = () => {
             <Switch>
                 {AuthService.isAuthenticated() ? (
                     <>
-                        <Protected path="/" component={Home}/>
+                        <Protected path="/" exact component={Home}/>
                         <Protected path="/user/search/:id" component={UserSearch}/>
                         <Protected path="/voucher/:id" component={Voucher}/>
                         <Protected path="/reader" component={Reader}/>
