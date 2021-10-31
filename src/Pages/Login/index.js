@@ -1,4 +1,5 @@
 import React, { useState } from 'react'
+import { Redirect } from 'react-router-dom';
 import { 
     Grid,
     Typography,
@@ -53,7 +54,9 @@ const Login = () => {
             setToggleFailureSnack(true)
         }
     }
-
+    if (AuthService.getAuthData()) {
+        return <Redirect to="/home"/>
+    }
     return (
         <Container component="main" maxWidth="xs">
         <Backdrop open={isLoading}/>

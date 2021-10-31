@@ -14,11 +14,6 @@ export const styles = makeStyles(theme => ({
     gridContainer: {
         marginBottom: "80px"
     },
-    fab: {
-        position: 'absolute',
-        bottom: theme.spacing(2),
-        right: theme.spacing(2),
-    },
     header: {
         marginBottom: "20px"
     }

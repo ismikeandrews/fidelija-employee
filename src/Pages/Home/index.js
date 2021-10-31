@@ -1,7 +1,6 @@
 import React, { useState, useRef } from 'react';
 import InputMask from 'react-input-mask';
 import { 
-    Fab, 
     TextField,
     Paper,
     Grid,
@@ -15,11 +14,10 @@ import {
     Typography,
     Divider,
 } from '@material-ui/core';
-import { CameraAlt, AccountBox, MonetizationOn, Receipt, AccountBalance } from '@material-ui/icons';
+import { AccountBox, MonetizationOn, Receipt, AccountBalance } from '@material-ui/icons';
 import { styles } from './home.elements';
-import { Backdrop, Snackbar, AppBar, NumberFormat } from '../../Components';
+import { Backdrop, Snackbar, AppBar, NumberFormat, Fab } from '../../Components';
 import { UserService, AuthService } from '../../Services';
-
 
 const Home = () => {
     const [isLoading, setIsLoading] = useState(false);
@@ -31,7 +29,7 @@ const Home = () => {
     const [ammount, setAmmount] = useState('');
     const [reference, setReference] = useState('')
     const classes = styles();
-    const inputFile = useRef(null);
+    
 
     const fetchData = async () => {
         setIsLoading(true)
@@ -152,10 +150,7 @@ const Home = () => {
                         </Grid>
                     )}
                 </Grid>
-                <input type="file" accept="image/*" capture="camera" ref={inputFile} style={{display: "none"}}/>
-                <Fab className={classes.fab} color="secondary" onClick={() => inputFile.current.click()}>
-                    <CameraAlt/>
-                </Fab>
+                <Fab/>
             </Container>
         </div>
     )
