@@ -11,16 +11,16 @@ import {
     Container,
     Typography
 } from '@material-ui/core';
-import { AppBar, Snackbar, Backdrop } from '../../Components';
+import { AppBar, Snackbar, Backdrop, Fab } from '../../Components';
 import { VoucherService } from '../../Services';
 import { Styles } from './voucher.elements';
 import { ShoppingBasket, ShowChart, AttachMoney, CalendarToday } from '@material-ui/icons';
 
 const Voucher = () => {
     const [voucher, setVoucher] = useState();
-    const [isLoading, setIsLoading] = useState(false);
+    const [isLoading, setIsLoading] = useState(true);
     const [toggleFailureSnack, setToggleFailureSnack] = useState(false);
-    const [toggleSuccessSnack, setToggleSuccessSnack] = useState(true);
+    const [toggleSuccessSnack, setToggleSuccessSnack] = useState(false);
     const [infoMsg, setInfoMsg] = useState('');
     const {id} = useParams();
     const classes = Styles();
@@ -111,6 +111,7 @@ const Voucher = () => {
                     </Paper>
                 </Container>
             )}
+            <Fab/>
         </div>
     )
 }

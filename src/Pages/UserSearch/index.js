@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react'
 import { useParams } from 'react-router-dom';
 import { UserService, AuthService } from '../../Services';
-import { AppBar, Snackbar, Backdrop } from '../../Components';
+import { AppBar, Snackbar, Backdrop, Fab } from '../../Components';
 import {
     Paper,
     List,
@@ -125,6 +125,7 @@ const UserSearch = () => {
                     </Paper>
                 </Container>
             )}
+            <Fab/>
         </div>
     )
 }

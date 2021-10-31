@@ -54,9 +54,6 @@ const Login = () => {
             setToggleFailureSnack(true)
         }
     }
-    if (AuthService.getAuthData()) {
-        return <Redirect to="/home"/>
-    }
     return (
         <Container component="main" maxWidth="xs">
         <Backdrop open={isLoading}/>
@@ -72,7 +69,7 @@ const Login = () => {
                     </Typography>
                     <div className={classes.form} >
                         <TextField variant="outlined" margin="normal" required fullWidth label="Email" name="email" type="email" value={email} onChange={(e) => setEmail(e.target.value)}/>
-                        <TextField variant="outlined" margin="normal" required fullWidth name="password" label="Senha" type="password" value={password} onChange={e => setPassword(e.target.value)}/>
+                        <TextField variant="outlined" margin="normal" required fullWidth name="password" label="Senha" type="password" value={password} onChange={(e) => setPassword(e.target.value)}/>
                         <FormControlLabel control={<Checkbox value="remember" color="primary" />} label="Lembrar-me"/>
                         <Button fullWidth variant="contained" color="primary" className={classes.submit} onClick={() => submitLogin()}>
                             Entrar
