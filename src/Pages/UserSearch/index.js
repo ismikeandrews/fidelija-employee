@@ -28,18 +28,19 @@ const UserSearch = () => {
     const classes = styles();
     
     useEffect(() => {
-        fetchData()
+        const fetchUser = async () => {
+            try {
+                const { data } = await UserService.getUser(id);
+                console.log(data);
+                setUser(data);
+            } catch (error) {
+                console.log(error)
+            }
+        }
+
+        fetchUser()
     }, [])
 
-    const fetchData = async () => {
-        try {
-            const { data } = await UserService.getUser(id);
-            console.log(data);
-            setUser(data);
-        } catch (error) {
-            console.log(error)
-        }
-    }
 
     const submitScore = async () => {
         setIsLoading(false);
@@ -76,8 +77,8 @@ const UserSearch = () => {
                 <Container>
                     <Paper variant="outlined">
                         <div className={classes.inputs}>
-                            <TextField fullWidth variant="outlined" label="Valor da compra" margin="normal" name="valor" value={ammount} onChange={e => setAmmount(e.target.value)}/>
-                            <TextField fullWidth variant="outlined" label="Referencia" margin="normal" name="valor" value={reference} onChange={e => setReference(e.target.value)}/>
+                            <TextField fullWidth variant="outlined" label="Valor da compra" margin="normal" name="valor" value={ammount} onChange={(e) => setAmmount(e.target.value)}/>
+                            <TextField fullWidth variant="outlined" label="Referencia" margin="normal" name="valor" value={reference} onChange={(e) => setReference(e.target.value)}/>
                         </div>
                         <List dense={false}>
                             <ListItem>

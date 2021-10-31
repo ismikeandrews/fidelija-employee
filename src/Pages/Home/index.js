@@ -1,4 +1,4 @@
-import React, { useState, useRef } from 'react';
+import React, { useState } from 'react';
 import InputMask from 'react-input-mask';
 import { 
     TextField,
@@ -16,7 +16,7 @@ import {
 } from '@material-ui/core';
 import { AccountBox, MonetizationOn, Receipt, AccountBalance } from '@material-ui/icons';
 import { styles } from './home.elements';
-import { Backdrop, Snackbar, AppBar, NumberFormat, Fab } from '../../Components';
+import { Backdrop, Snackbar, AppBar, Fab } from '../../Components';
 import { UserService, AuthService } from '../../Services';
 
 const Home = () => {
@@ -91,13 +91,13 @@ const Home = () => {
                 <Grid className={classes.gridContainer} container spacing={3} direction="column" justifyContent="center">
                     <Grid item xs={12}>
                         <Paper variant="outlined" className={classes.paper}>
-                            <InputMask mask="999.999.999-99" maskChar="" value={cpf} onChange={e => setCpf(e.target.value)} onBlur={fetchData}>
+                            <InputMask mask="999.999.999-99" maskChar="" value={cpf} onChange={(e) => setCpf(e.target.value)} onBlur={() => fetchData()}>
                                 {props => (
                                     <TextField {...props} fullWidth variant="outlined" label="CPF" margin="normal" type="text"/>
                                 )}
                             </InputMask>
-                            <TextField fullWidth variant="outlined" label="Valor da compra" margin="normal" name="valor" value={ammount} onChange={e => setAmmount(e.target.value)} InputProps={{inputComponent: NumberFormat}}/>
-                            <TextField fullWidth variant="outlined" label="Referência" margin="normal" name="valor" value={reference} onChange={e => setReference(e.target.value)}/>
+                            <TextField fullWidth variant="outlined" label="Valor da compra" margin="normal" name="valor" value={ammount} onChange={(e) => setAmmount(e.target.value)}/>
+                            <TextField fullWidth variant="outlined" label="Referência" margin="normal" name="valor" value={reference} onChange={(e) => setReference(e.target.value)}/>
                         </Paper>
                     </Grid>
                     {user && (
@@ -144,7 +144,7 @@ const Home = () => {
                                     </ListItem>
                                 </List>
                                 <div style={{padding: "10px"}}>
-                                    <Button className={classes.button} variant="contained" color="inherit" fullWidth size="medium" disabled={ammount === '' || reference === ''} onClick={submitScore}>Pontuar</Button>
+                                    <Button className={classes.button} variant="contained" color="inherit" fullWidth size="medium" disabled={ammount === '' || reference === ''} onClick={() => submitScore()}>Pontuar</Button>
                                 </div>
                             </Paper>
                         </Grid>

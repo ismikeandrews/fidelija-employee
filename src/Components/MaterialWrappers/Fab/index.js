@@ -28,7 +28,7 @@ const Fab = () => {
             ref={qrRef}
             delay={300}
             onError={(error) => console.log(error)}
-            onScan={handleScan}
+            onScan={(result) => handleScan(result)}
             legacyMode/>
             <MuiFab className={classes.fab} color="secondary" onClick={() => qrRef.current.openImageDialog()}>
                 <CameraAlt/>

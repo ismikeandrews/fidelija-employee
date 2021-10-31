@@ -36,7 +36,7 @@ const AppBar = (props) => {
                     <Avatar src={process.env.REACT_APP_BASE_URL + AuthService.getLoggedUser().photo}/>
                 </IconButton>
                     <Menu anchorEl={anchorRef.current} open={open} onClose={() => setOpen(false)}>
-                        <MenuItem component={Button} endIcon={<ExitToApp/>} color="secondary" onClick={logout}>Sair</MenuItem>
+                        <MenuItem component={Button} endIcon={<ExitToApp/>} color="secondary" onClick={() => logout()}>Sair</MenuItem>
                     </Menu>
                 </div>
             </Toolbar>

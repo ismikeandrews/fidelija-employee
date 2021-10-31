@@ -5,7 +5,7 @@ import { AuthService } from '../Services';
 const Protected = ({component: Component, ...rest}) => {
     return (
         <Route {...rest} render={
-            (props) =>{
+            (props) => {
                 if(AuthService.isAuthenticated()){
                     return <Component {...props}/>
                 }else{

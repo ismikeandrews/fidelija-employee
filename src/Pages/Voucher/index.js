@@ -26,18 +26,19 @@ const Voucher = () => {
     const classes = Styles();
 
     useEffect(() => {
-        fetchData()
+        const fetchVoucher = async () => {
+            try {
+                const { data } = await VoucherService.getVoucher(id);
+                setVoucher(data);
+                setIsLoading(false)
+            } catch (error) {
+                console.log(error);
+            }
+        }  
+
+        fetchVoucher()
     }, []);
 
-    const fetchData = async () => {
-        try {
-            const { data } = await VoucherService.getVoucher(id);
-            setVoucher(data);
-            setIsLoading(false)
-        } catch (error) {
-            console.log(error);
-        }
-    }  
 
     const completeVoucher = async () => {
         setIsLoading(true)
@@ -104,7 +105,7 @@ const Voucher = () => {
                             </ListItem>
                         </List>
                         <div style={{padding: "10px"}}>
-                            <Button className={classes.button} fullWidth variant="contained" onClick={completeVoucher}>
+                            <Button className={classes.button} fullWidth variant="contained" onClick={() => completeVoucher()}>
                                 Confirmar
                             </Button>
                         </div>

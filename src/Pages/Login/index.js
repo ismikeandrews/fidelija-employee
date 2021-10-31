@@ -1,5 +1,4 @@
 import React, { useState } from 'react'
-import { Redirect } from 'react-router-dom';
 import { 
     Grid,
     Typography,
@@ -41,7 +40,7 @@ const Login = () => {
             if(employeeRes.data.employeeInfo || employeeRes.data.stablishment){
                 await AuthService.setLoggedUser(employeeRes.data, authRes.data);
                 setIsLoading(false);
-                window.location.replace("/home")
+                window.location.reload()
             }else {
                 setIsLoading(false);
                 setInfoMsg('Acesso não autorizado');
@@ -54,6 +53,7 @@ const Login = () => {
             setToggleFailureSnack(true)
         }
     }
+
     return (
         <Container component="main" maxWidth="xs">
         <Backdrop open={isLoading}/>

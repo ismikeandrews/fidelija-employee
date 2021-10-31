@@ -1,7 +1,8 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import { BrowserRouter, Switch, Route, Redirect } from 'react-router-dom';
+import { AuthService } from '../Services';
 import Unprotected from './unprotected.routes';
-import Protected from './protected.routes'
+import Protected from './protected.routes';
 import { Login, Home, UserSearch, Voucher, Reader } from '../Pages';
 
 const Index = () => {
@@ -12,11 +13,16 @@ const Routes = () => {
     return (
         <BrowserRouter>
             <Switch>
-                <Unprotected path="/" exact component={Login}/>
-                <Protected path="/home" component={Home}/>
-                <Protected path="/user/search/:id" component={UserSearch}/>
-                <Protected path="/voucher/:id" component={Voucher}/>
-                <Protected path="/reader" component={Reader}/>
+                {AuthService.isAuthenticated() ? (
+                    <>
+                        <Protected path="/" component={Home}/>
+                        <Protected path="/user/search/:id" component={UserSearch}/>
+                        <Protected path="/voucher/:id" component={Voucher}/>
+                        <Protected path="/reader" component={Reader}/>
+                    </>
+                ) : (
+                    <Unprotected path="/" exact component={Login}/>
+                )}
                 <Route path="*" exact component={Index}/>
             </Switch>
         </BrowserRouter>
