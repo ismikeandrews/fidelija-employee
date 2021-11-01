@@ -67,7 +67,7 @@ const AppBar = (props) => {
                                 <AttachMoney/>
                             </ListItemIcon>
                             <ListItemText>
-                                Pontuar por CPF
+                                Pontuar
                             </ListItemText>
                         </ListItem>
                         <ListItem button component={Link} to="/redeem">
@@ -75,7 +75,7 @@ const AppBar = (props) => {
                                 <ConfirmationNumber/>
                             </ListItemIcon>
                             <ListItemText>
-                                Regate por código
+                                Resgate de produto
                             </ListItemText>
                         </ListItem>
                         <ListItem button component={Link} to="/reader">

@@ -38,8 +38,6 @@ const UserSearch = () => {
             } catch (error) {
                 console.log(error)
                 setIsLoading(false);
-                setDialogText("Não foi possível encontrar o usuário.");
-                setToggleDialog(true);
             }
         }
         fetchUser()
@@ -131,12 +129,10 @@ const UserSearch = () => {
                     ) : (
                         <div className={classes.notFound}>
                             <Container maxWidth="lg">
-                                <Paper variant="outlined" className={classes.paperPadding}>
-                                    <img src={VoidSvg} width="250"/>
-                                    <Typography variant="h6" className={classes.notFoundMsg}>
-                                        O usuário não foi encontrado
-                                    </Typography>
-                                </Paper>                            
+                                <img src={VoidSvg} width="250"/>
+                                <Typography variant="h6" className={classes.notFoundMsg}>
+                                    O usuário não foi encontrado
+                                </Typography>               
                             </Container>
                         </div>
                     )}

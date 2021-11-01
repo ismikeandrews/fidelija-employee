@@ -147,8 +147,8 @@ const PointUser = () => {
                         </Grid>
                     )}
                 </Grid>
-                <Fab/>
             </Container>
+            <Fab/>
         </div>
     )
 }

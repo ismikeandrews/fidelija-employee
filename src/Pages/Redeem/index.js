@@ -12,13 +12,13 @@ import {
     Button,
     ListItemText,
     Typography,
-    Divider
+    Divider,
  } from '@material-ui/core';
 import { AppBar } from '../../Components';
 import { styles } from './redeem.elements';
 import { VoucherService } from '../../Services';
 import { ShoppingBasket, ShowChart, AttachMoney, CalendarToday } from '@material-ui/icons';
-import { Backdrop, Dialog } from '../../Components';
+import { Backdrop, Dialog, Fab } from '../../Components';
 
 const Redeem = () => {
     const [id, setId] = useState('');
@@ -67,6 +67,7 @@ const Redeem = () => {
         <div>
             <AppBar/>
             <Backdrop open={isLoading}/>
+            <Dialog open={toggleDialog} close={() => setToggleDialog(false)} text={dialogText}/>
             <Container maxWidth="lg">
                 <div className={classes.header}>
                     <Typography variant="h6">Resgate</Typography>
@@ -132,6 +133,7 @@ const Redeem = () => {
                     )}
                 </Grid>
             </Container>
+            <Fab/>
         </div>
     )
 }

@@ -48,7 +48,6 @@ const Voucher = () => {
             setIsLoading(false);
             setDialogText('Resgate concluido com sucesso.');
             setToggleDialog(true);
-            setVoucher(null);
         } catch (error) {
             console.log(error)
             setIsLoading(false)
@@ -114,12 +113,10 @@ const Voucher = () => {
                     ) : (
                         <div className={classes.notFound}>
                             <Container maxWidth="lg">
-                                <Paper variant="outlined" className={classes.paperPadding}>
-                                    <img src={VoidSvg} width="250"/>
-                                    <Typography variant="h6" className={classes.notFoundMsg}>
-                                        O cupom inserido é inválido ou não existe.
-                                    </Typography>
-                                </Paper>                            
+                                <img src={VoidSvg} width="250"/>
+                                <Typography variant="h6" className={classes.notFoundMsg}>
+                                    O cupom inserido é inválido ou não existe.
+                                </Typography>               
                             </Container>
                         </div>
                     )}
