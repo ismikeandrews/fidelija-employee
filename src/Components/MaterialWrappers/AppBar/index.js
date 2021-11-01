@@ -18,7 +18,7 @@ import {
 import { Menu as MenuIcon, ExitToApp } from '@material-ui/icons';
 import { styles } from './appbar.elements';
 import { AuthService } from '../../../Services';
-import { History, AttachMoney, ConfirmationNumber, DesktopWindows } from '@material-ui/icons';
+import { History, AttachMoney, ConfirmationNumber } from '@material-ui/icons';
 
 
 const AppBar = (props) => {
@@ -76,14 +76,6 @@ const AppBar = (props) => {
                             </ListItemIcon>
                             <ListItemText>
                                 Resgate de produto
-                            </ListItemText>
-                        </ListItem>
-                        <ListItem button component={Link} to="/reader">
-                            <ListItemIcon>
-                                <DesktopWindows/>
-                            </ListItemIcon>
-                            <ListItemText>
-                                Modo desktop
                             </ListItemText>
                         </ListItem>
                     </List>

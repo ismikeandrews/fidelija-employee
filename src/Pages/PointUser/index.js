@@ -78,7 +78,7 @@ const PointUser = () => {
             <Dialog open={toggleDialog} close={() => setToggleDialog(false)} text={dialogText}/>
             <Container maxWidth="lg">
                 <div className={classes.header}>
-                    <Typography variant="h6">Pontuar usuário</Typography>
+                    <Typography variant="h5">Pontuar usuário</Typography>
                     <Divider/>
                 </div>
                 <Grid className={classes.gridContainer} container spacing={3} direction="column" justifyContent="center">

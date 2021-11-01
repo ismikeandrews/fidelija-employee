@@ -15,7 +15,7 @@ import {
     TimelineDot,
 } from '@material-ui/lab'
 import { Add, Remove } from '@material-ui/icons';
-import { AppBar } from '../../Components';
+import { AppBar, Fab } from '../../Components';
 import { UserService } from '../../Services';
 
 const useStyles = makeStyles((theme) => ({
@@ -72,6 +72,7 @@ const History = () => {
                     ))}
                 </Timeline>
             </div>
+            <Fab/>
         </div>
     )
 }

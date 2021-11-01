@@ -1,5 +1,5 @@
-import React, { useRef } from 'react'
-import QrReader from 'react-qr-reader';
+import React from 'react'
+import { Link } from 'react-router-dom';
 import { Fab as MuiFab, makeStyles } from '@material-ui/core';
 import CameraAlt from '@material-ui/icons/CameraAlt';
 
@@ -11,29 +11,13 @@ const styles = makeStyles(theme => ({
     },
 }))
 
-const Fab = () => {
-    const qrRef = useRef(null);
+const Fab = () => {    
     const classes = styles();
 
-    const handleScan = (result) => {
-        if(result){
-            window.location.replace(result);
-        }
-    }
-
     return (
-        <div>
-            <QrReader
-            style={{display: 'none'}}
-            ref={qrRef}
-            delay={300}
-            onError={(error) => console.log(error)}
-            onScan={(result) => handleScan(result)}
-            legacyMode/>
-            <MuiFab className={classes.fab} color="secondary" onClick={() => qrRef.current.openImageDialog()}>
-                <CameraAlt/>
-            </MuiFab>
-        </div>
+        <MuiFab className={classes.fab} color="secondary" component={Link} to="/reader">
+            <CameraAlt/>
+        </MuiFab>
     )
 }
 
