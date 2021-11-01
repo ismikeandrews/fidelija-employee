@@ -74,15 +74,15 @@ const Redeem = () => {
                     <Divider/>
                 </div>
                 <Grid className={classes.gridContainer} container spacing={3} direction="column" justifyContent="center">
-                    <Grid item className={classes.gridContainer} xs={12}>
+                    {/* <Grid item className={classes.gridContainer} xs={12}>
                         <Paper variant="outlined" className={classes.paper}>
-                            <InputMask mask="9-99-9999_9999999999" maskChar="" value={id} onChange={(e) => setId(e.target.value)} onKeyPress={(e) => fetchData(e)}>
+                            <InputMask mask="9-99-99_9999999999" maskChar="" value={id} onChange={(e) => setId(e.target.value)} onKeyPress={(e) => fetchData(e)} disabled>
                                 {props => (
                                     <TextField {...props} fullWidth variant="outlined" label="Código de resgate" margin="normal" type="text"/>
                                 )}
                             </InputMask>
                         </Paper>
-                    </Grid>
+                    </Grid> */}
                     {voucher && (
                         <Grid item xs={12}>
                             <Paper variant="outlined">

@@ -15,6 +15,10 @@ const UserService = {
     async getUser(id){
         const endpoint = `${url}api/user/${id}`;
         return axios.get(endpoint, AuthStr);
+    },
+    async getHistory(){
+        const endpoint = `${url}api/employees/history`
+        return axios.get(endpoint, AuthStr)
     }
 }
 
