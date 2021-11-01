@@ -11,5 +11,16 @@ export const styles = makeStyles(theme => ({
     },
     inputs: {
         padding: "15px"
+    },
+    notFound:{
+        textAlign: 'center',
+        margin: '70px'
+    },
+    notFoundMsg: {
+        marginTop: '20px',
+        marginBottom: '20px'
+    },
+    paperPadding:{
+        padding: 30
     }
 }))

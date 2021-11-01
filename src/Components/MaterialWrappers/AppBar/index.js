@@ -1,4 +1,5 @@
 import React, { useState, useRef } from 'react';
+import { Link } from 'react-router-dom';
 import {
     AppBar as MuiAppBar,
     Toolbar,
@@ -7,14 +8,22 @@ import {
     Typography,
     MenuItem,
     Menu,
-    Button
+    Button,
+    SwipeableDrawer,
+    List,
+    ListItemText,
+    ListItem,
+    ListItemIcon
 } from '@material-ui/core';
 import { Menu as MenuIcon, ExitToApp } from '@material-ui/icons';
 import { styles } from './appbar.elements';
 import { AuthService } from '../../../Services';
+import { History, AttachMoney, ConfirmationNumber, DesktopWindows } from '@material-ui/icons';
+
 
 const AppBar = (props) => {
     const [open, setOpen] = useState(false)
+    const [toggleDrawer, setToggleDrawer] = useState(false)
     const classes = styles();
     const anchorRef = useRef(null);
 
@@ -23,24 +32,64 @@ const AppBar = (props) => {
     }
 
     return (
-        <MuiAppBar position="static" className={classes.appBar}>
-            <Toolbar>
-                <IconButton edge="start" className={classes.menuButton} color="inherit" aria-label="menu">
-                    <MenuIcon />
-                </IconButton>
-                <Typography variant="h6" className={classes.title}>
-                    Painel do funcionário
-                </Typography>
-                <div>
-                <IconButton onClick={() => setOpen(true)} ref={anchorRef}>
-                    <Avatar src={process.env.REACT_APP_BASE_URL + AuthService.getLoggedUser().photo}/>
-                </IconButton>
-                    <Menu anchorEl={anchorRef.current} open={open} onClose={() => setOpen(false)}>
-                        <MenuItem component={Button} endIcon={<ExitToApp/>} color="secondary" onClick={() => logout()}>Sair</MenuItem>
-                    </Menu>
+        <>
+            <MuiAppBar position="static" className={classes.appBar}>
+                <Toolbar>
+                    <IconButton edge="start" className={classes.menuButton} color="inherit" aria-label="menu" onClick={() => setToggleDrawer(true)}>
+                        <MenuIcon />
+                    </IconButton>
+                    <Typography variant="h6" className={classes.title}>
+                        Painel do funcionário
+                    </Typography>
+                    <div>
+                    <IconButton onClick={() => setOpen(true)} ref={anchorRef}>
+                        <Avatar src={process.env.REACT_APP_BASE_URL + AuthService.getLoggedUser().photo}/>
+                    </IconButton>
+                        <Menu anchorEl={anchorRef.current} open={open} onClose={() => setOpen(false)}>
+                            <MenuItem component={Button} endIcon={<ExitToApp/>} color="secondary" onClick={() => logout()}>Sair</MenuItem>
+                        </Menu>
+                    </div>
+                </Toolbar>
+            </MuiAppBar>
+            <SwipeableDrawer anchor="left" open={toggleDrawer} onOpen={() => setToggleDrawer(true)} onClose={() => setToggleDrawer(false)}>
+                <div className={classes.list}  role="presentation" onClick={() => setToggleDrawer(false)} onKeyDown={() => setToggleDrawer(false)}>
+                    <List>
+                        <ListItem button component={Link} to="/">
+                            <ListItemIcon>
+                                <History/>
+                            </ListItemIcon>
+                            <ListItemText>
+                                Histórico
+                            </ListItemText>
+                        </ListItem>
+                        <ListItem button component={Link} to="/point-user">
+                            <ListItemIcon>
+                                <AttachMoney/>
+                            </ListItemIcon>
+                            <ListItemText>
+                                Pontuar por CPF
+                            </ListItemText>
+                        </ListItem>
+                        <ListItem button component={Link} to="/redeem">
+                            <ListItemIcon>
+                                <ConfirmationNumber/>
+                            </ListItemIcon>
+                            <ListItemText>
+                                Regate por código
+                            </ListItemText>
+                        </ListItem>
+                        <ListItem button component={Link} to="/reader">
+                            <ListItemIcon>
+                                <DesktopWindows/>
+                            </ListItemIcon>
+                            <ListItemText>
+                                Modo desktop
+                            </ListItemText>
+                        </ListItem>
+                    </List>
                 </div>
-            </Toolbar>
-        </MuiAppBar>
+            </SwipeableDrawer>
+        </>
     )
 }
 

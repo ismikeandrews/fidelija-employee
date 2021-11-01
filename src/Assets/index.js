@@ -1,0 +1,1 @@
+export { default as VoidSvg } from './svg/void.svg';

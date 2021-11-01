@@ -50,44 +50,44 @@ const Login = () => {
             console.log(error);
             setIsLoading(false)
             setInfoMsg("Ocorreu um erro tente novamente.")
-            setToggleFailureSnack(true)
+            setToggleFailureSnack(true);
         }
     }
 
     return (
         <Container component="main" maxWidth="xs">
-        <Backdrop open={isLoading}/>
-        <Snackbar toggleSnack={toggleFailureSnack} time={4500} onClose={() => setToggleFailureSnack(false)} color="error">
-            {infoMsg}
-        </Snackbar>
-                <div className={classes.paper}>
-                    <Avatar className={classes.avatar}>
-                        <LockOutlinedIcon />
-                    </Avatar>
-                    <Typography component="h1" variant="h5">
-                        Login de Funcionários
-                    </Typography>
-                    <div className={classes.form} >
-                        <TextField variant="outlined" margin="normal" required fullWidth label="Email" name="email" type="email" value={email} onChange={(e) => setEmail(e.target.value)}/>
-                        <TextField variant="outlined" margin="normal" required fullWidth name="password" label="Senha" type="password" value={password} onChange={(e) => setPassword(e.target.value)}/>
-                        <FormControlLabel control={<Checkbox value="remember" color="primary" />} label="Lembrar-me"/>
-                        <Button fullWidth variant="contained" color="primary" className={classes.submit} onClick={() => submitLogin()}>
-                            Entrar
-                        </Button>
-                        <Grid container>
-                            <Grid item xs>
-                                <Link href="#" variant="body2">
-                                    Esqueceu a senha?
-                                </Link>
-                            </Grid>
-                            <Grid item>
-                                <Link href="#" variant="body2">
-                                    Ainda não possui uma conta?
-                                </Link>
-                            </Grid>
+            <Backdrop open={isLoading}/>
+            <Snackbar toggleSnack={toggleFailureSnack} time={4500} onClose={() => setToggleFailureSnack(false)} color="error">
+                {infoMsg}
+            </Snackbar>
+            <div className={classes.paper}>
+                <Avatar className={classes.avatar}>
+                    <LockOutlinedIcon />
+                </Avatar>
+                <Typography component="h1" variant="h5">
+                    Login de Funcionários
+                </Typography>
+                <div className={classes.form} >
+                    <TextField variant="outlined" margin="normal" required fullWidth label="Email" name="email" type="email" value={email} onChange={(e) => setEmail(e.target.value)}/>
+                    <TextField variant="outlined" margin="normal" required fullWidth name="password" label="Senha" type="password" value={password} onChange={(e) => setPassword(e.target.value)}/>
+                    <FormControlLabel control={<Checkbox value="remember" color="primary" />} label="Lembrar-me"/>
+                    <Button fullWidth variant="contained" color="primary" className={classes.submit} onClick={() => submitLogin()}>
+                        Entrar
+                    </Button>
+                    <Grid container>
+                        <Grid item xs>
+                            <Link href="#" variant="body2">
+                                Esqueceu a senha?
+                            </Link>
                         </Grid>
-                    </div>
+                        <Grid item>
+                            <Link href="#" variant="body2">
+                                Ainda não possui uma conta?
+                            </Link>
+                        </Grid>
+                    </Grid>
                 </div>
+            </div>
             <Box mt={8}>
                 <Typography variant="body2" color="textSecondary" align="center">
                     {'Copyright © '}

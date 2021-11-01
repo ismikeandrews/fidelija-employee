@@ -15,44 +15,39 @@ import {
     Divider,
 } from '@material-ui/core';
 import { AccountBox, MonetizationOn, Receipt, AccountBalance } from '@material-ui/icons';
-import { styles } from './home.elements';
-import { Backdrop, Snackbar, AppBar, Fab } from '../../Components';
+import { styles } from './pointUser.elements';
+import { Backdrop, AppBar, Fab, Dialog } from '../../Components';
 import { UserService, AuthService } from '../../Services';
 
-const Home = () => {
+const PointUser = () => {
     const [isLoading, setIsLoading] = useState(false);
-    const [toggleFailureSnack, setToggleFailureSnack] = useState(false);
-    const [toggleSuccessSnack, setToggleSuccessSnack] = useState(false);
-    const [infoMsg, setInfoMsg] = useState('');
     const [user, setUser] = useState(null);
     const [cpf, setCpf] = useState('');
     const [ammount, setAmmount] = useState('');
-    const [reference, setReference] = useState('')
+    const [reference, setReference] = useState('');
+    const [toggleDialog, setToggleDialog] = useState(false);
+    const [dialogText, setDialogText] = useState('');
     const classes = styles();
     
-
-    const fetchData = async () => {
-        setIsLoading(true)
-        const data = {cpf}   
-        try {
-            const res = await UserService.getUserByCpf(data)
-            console.log(res.data)
-            setUser(res.data)
-            setIsLoading(false)
-            if(!res.data && cpf.length > 0){
-                setInfoMsg("Usuário não encontrado.")
-                setToggleFailureSnack(true);
+    const fetchData = async (e) => {
+        if (e.key === 'Enter') {
+            setIsLoading(true)
+            const data = {cpf}   
+            try {
+                const res = await UserService.getUserByCpf(data);
+                setUser(res.data);
+                setIsLoading(false);
+            } catch (error) {
+                console.log(error);
+                setIsLoading(false);
+                setDialogText('Não foi possível encontrar o usuário.');
+                setToggleDialog(true);
             }
-        } catch (error) {
-            console.log(error)
-            setIsLoading(false)
-            setInfoMsg("Não foi possível buscar o usuário.")
-            setToggleFailureSnack(true);
         }
     }
 
     const submitScore = async () => {
-        setIsLoading(false);
+        setIsLoading(true);
         const data = {
             user_id: user.id, 
             ammount: ammount,
@@ -66,13 +61,13 @@ const Home = () => {
             setCpf('')
             setReference('')
             setIsLoading(false);
-            setInfoMsg("Usuário pontuado com sucesso.");
-            setToggleSuccessSnack(true);
+            setDialogText('Usuário pontuado com sucesso.');
+            setToggleDialog(true);
         } catch (error) {
             setIsLoading(false)
-            setInfoMsg("Não foi possivel pontuar o usuário")
-            setToggleFailureSnack(true)
             console.log(error)
+            setDialogText('Não foi possível pontuar o usuário.')
+            setToggleDialog(true);
         }
     }
 
@@ -80,9 +75,7 @@ const Home = () => {
         <div>
             <AppBar/>
             <Backdrop open={isLoading}/>
-            <Snackbar toggleSnack={toggleFailureSnack || toggleSuccessSnack} time={4500} onClose={() => {setToggleFailureSnack(false); setToggleSuccessSnack(false)}} color={toggleSuccessSnack ? "success" : "warning"}>
-                {infoMsg}
-            </Snackbar>
+            <Dialog open={toggleDialog} close={() => setToggleDialog(false)} text={dialogText}/>
             <Container maxWidth="lg">
                 <div className={classes.header}>
                     <Typography variant="h6">Pontuar usuário</Typography>
@@ -91,13 +84,17 @@ const Home = () => {
                 <Grid className={classes.gridContainer} container spacing={3} direction="column" justifyContent="center">
                     <Grid item xs={12}>
                         <Paper variant="outlined" className={classes.paper}>
-                            <InputMask mask="999.999.999-99" maskChar="" value={cpf} onChange={(e) => setCpf(e.target.value)} onBlur={() => fetchData()}>
+                            <InputMask mask="999.999.999-99" maskChar="" value={cpf} onChange={(e) => setCpf(e.target.value)} onKeyPress={(e) => fetchData(e)}>
                                 {props => (
                                     <TextField {...props} fullWidth variant="outlined" label="CPF" margin="normal" type="text"/>
                                 )}
                             </InputMask>
-                            <TextField fullWidth variant="outlined" label="Valor da compra" margin="normal" name="valor" value={ammount} onChange={(e) => setAmmount(e.target.value)}/>
-                            <TextField fullWidth variant="outlined" label="Referência" margin="normal" name="valor" value={reference} onChange={(e) => setReference(e.target.value)}/>
+                            {user && (
+                                <>
+                                    <TextField fullWidth variant="outlined" label="Valor da compra" margin="normal" name="valor" value={ammount} onChange={(e) => setAmmount(e.target.value)}/>
+                                    <TextField fullWidth variant="outlined" label="Referência" margin="normal" name="valor" value={reference} onChange={(e) => setReference(e.target.value)}/>
+                                </>
+                            )}
                         </Paper>
                     </Grid>
                     {user && (
@@ -156,4 +153,4 @@ const Home = () => {
     )
 }
 
-export default Home
+export default PointUser

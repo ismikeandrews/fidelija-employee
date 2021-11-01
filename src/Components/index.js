@@ -1,1 +1,1 @@
-export { Snackbar, Backdrop, AppBar, Fab } from './MaterialWrappers';
+export { Snackbar, Backdrop, AppBar, Fab, Dialog } from './MaterialWrappers';

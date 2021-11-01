@@ -9,5 +9,8 @@ export const styles = makeStyles(theme => ({
     },
     appBar: {
         marginBottom: "30px"
-    }
+    },
+    list: {
+        width: 250,
+    },
 }))

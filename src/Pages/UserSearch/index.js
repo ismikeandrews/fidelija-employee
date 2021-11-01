@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react'
 import { useParams } from 'react-router-dom';
 import { UserService, AuthService } from '../../Services';
-import { AppBar, Snackbar, Backdrop, Fab } from '../../Components';
+import { AppBar, Backdrop, Fab, Dialog } from '../../Components';
 import {
     Paper,
     List,
@@ -11,19 +11,20 @@ import {
     ListItemText,
     Button,
     TextField,
-    Container
+    Container,
+    Typography
 } from '@material-ui/core';
 import { AccountBox, MonetizationOn, AccountBalance, Receipt } from '@material-ui/icons';
 import { styles } from './userSearch.elements';
+import { VoidSvg } from '../../Assets'
 
 const UserSearch = () => {
-    const [user, setUser] = useState({});
+    const [user, setUser] = useState(null);
     const [ammount, setAmmount] = useState('');
     const [reference, setReference] = useState('');
-    const [toggleFailureSnack, setToggleFailureSnack] = useState(false);
-    const [toggleSuccessSnack, setToggleSuccessSnack] = useState(false);
-    const [infoMsg, setInfoMsg] = useState('');
-    const [isLoading, setIsLoading] = useState(false);
+    const [isLoading, setIsLoading] = useState(true);
+    const [toggleDialog, setToggleDialog] = useState(false);
+    const [dialogText, setDialogText] = useState('');
     const { id } = useParams();
     const classes = styles();
     
@@ -33,17 +34,20 @@ const UserSearch = () => {
                 const { data } = await UserService.getUser(id);
                 console.log(data);
                 setUser(data);
+                setIsLoading(false);
             } catch (error) {
                 console.log(error)
+                setIsLoading(false);
+                setDialogText("Não foi possível encontrar o usuário.");
+                setToggleDialog(true);
             }
         }
-
         fetchUser()
     }, [])
 
 
     const submitScore = async () => {
-        setIsLoading(false);
+        setIsLoading(true);
         const data = {
             user_id: user.id, 
             ammount: ammount,
@@ -52,17 +56,16 @@ const UserSearch = () => {
         }
         try {
             await UserService.registerPoints(data)
-            setUser(null)
             setAmmount('');
             setReference('')
             setIsLoading(false);
-            setInfoMsg("Usuário pontuado com sucesso.");
-            setToggleSuccessSnack(true);
+            setDialogText('Usuário pontuado com sucesso.');
+            setToggleDialog(true);
         } catch (error) {
-            setIsLoading(false)
-            setInfoMsg("Não foi possivel pontuar o usuário")
-            setToggleFailureSnack(true)
             console.log(error)
+            setIsLoading(false);
+            setDialogText('Não foi possivel pontuar o usuário.');
+            setToggleDialog(true);
         }
     }
 
@@ -70,62 +73,75 @@ const UserSearch = () => {
         <div>
             <AppBar/>
             <Backdrop open={isLoading}/>
-            <Snackbar toggleSnack={toggleFailureSnack || toggleSuccessSnack} time={4500} onClose={() => {setToggleFailureSnack(false); setToggleSuccessSnack(false)}} color={toggleSuccessSnack ? "success" : "warning"}>
-                {infoMsg}
-            </Snackbar>
-            {user && (
-                <Container>
-                    <Paper variant="outlined">
-                        <div className={classes.inputs}>
-                            <TextField fullWidth variant="outlined" label="Valor da compra" margin="normal" name="valor" value={ammount} onChange={(e) => setAmmount(e.target.value)}/>
-                            <TextField fullWidth variant="outlined" label="Referencia" margin="normal" name="valor" value={reference} onChange={(e) => setReference(e.target.value)}/>
+            <Dialog open={toggleDialog} close={() => setToggleDialog(false)} text={dialogText}/>
+            {isLoading || (
+                <>
+                    {user ? (
+                        <Container maxWidth="lg">
+                            <Paper variant="outlined">
+                                <div className={classes.inputs}>
+                                    <TextField fullWidth variant="outlined" label="Valor da compra" margin="normal" name="valor" value={ammount} onChange={(e) => setAmmount(e.target.value)}/>
+                                    <TextField fullWidth variant="outlined" label="Referencia" margin="normal" name="valor" value={reference} onChange={(e) => setReference(e.target.value)}/>
+                                </div>
+                                <List dense={false}>
+                                    <ListItem>
+                                        <ListItemAvatar>
+                                            <Avatar src={process.env.REACT_APP_BASE_URL +  user.photo} alt={user.name}/>
+                                        </ListItemAvatar>
+                                        <ListItemText>{user.name}</ListItemText>
+                                    </ListItem>
+                                    <ListItem>
+                                        <ListItemAvatar>
+                                            <Avatar style={{backgroundColor: "#604bd2"}}>
+                                                <AccountBox />
+                                            </Avatar>
+                                        </ListItemAvatar>
+                                        <ListItemText>{user.cpf}</ListItemText>
+                                    </ListItem>
+                                    <ListItem>
+                                        <ListItemAvatar>
+                                            <Avatar style={{backgroundColor: "#604bd2"}}>
+                                                <Receipt/>
+                                            </Avatar>
+                                        </ListItemAvatar>
+                                        <ListItemText>{reference || "- - -"}</ListItemText>
+                                    </ListItem>
+                                    <ListItem>
+                                        <ListItemAvatar>
+                                            <Avatar style={{backgroundColor: "#604bd2"}}>
+                                                <AccountBalance/>
+                                            </Avatar>
+                                        </ListItemAvatar>
+                                        <ListItemText>{user.stablishment_points || "- - -"}</ListItemText>
+                                    </ListItem>
+                                    <ListItem>
+                                        <ListItemAvatar>
+                                            <Avatar style={{backgroundColor: "rgb(38 165 43)"}}>
+                                                <MonetizationOn />
+                                            </Avatar>
+                                        </ListItemAvatar>
+                                        <ListItemText>{Math.ceil(ammount * 5)}</ListItemText>
+                                    </ListItem>
+                                </List>
+                                <div style={{padding: "10px"}}>
+                                    <Button className={classes.button} variant="contained" color="inherit" fullWidth size="medium" disabled={ammount === '' || reference === ''} onClick={() => submitScore()}>Pontuar</Button>
+                                </div>
+                            </Paper>
+                        </Container>
+                    ) : (
+                        <div className={classes.notFound}>
+                            <Container maxWidth="lg">
+                                <Paper variant="outlined" className={classes.paperPadding}>
+                                    <img src={VoidSvg} width="250"/>
+                                    <Typography variant="h6" className={classes.notFoundMsg}>
+                                        O usuário não foi encontrado
+                                    </Typography>
+                                </Paper>                            
+                            </Container>
                         </div>
-                        <List dense={false}>
-                            <ListItem>
-                                <ListItemAvatar>
-                                    <Avatar src={process.env.REACT_APP_BASE_URL +  user.photo} alt={user.name}/>
-                                </ListItemAvatar>
-                                <ListItemText>{user.name}</ListItemText>
-                            </ListItem>
-                            <ListItem>
-                                <ListItemAvatar>
-                                    <Avatar style={{backgroundColor: "#604bd2"}}>
-                                        <AccountBox />
-                                    </Avatar>
-                                </ListItemAvatar>
-                                <ListItemText>{user.cpf}</ListItemText>
-                            </ListItem>
-                            <ListItem>
-                                <ListItemAvatar>
-                                    <Avatar style={{backgroundColor: "#604bd2"}}>
-                                        <Receipt/>
-                                    </Avatar>
-                                </ListItemAvatar>
-                                <ListItemText>{reference || "- - -"}</ListItemText>
-                            </ListItem>
-                            <ListItem>
-                                <ListItemAvatar>
-                                    <Avatar style={{backgroundColor: "#604bd2"}}>
-                                        <AccountBalance/>
-                                    </Avatar>
-                                </ListItemAvatar>
-                                <ListItemText>{user.stablishment_points || "- - -"}</ListItemText>
-                            </ListItem>
-                            <ListItem>
-                                <ListItemAvatar>
-                                    <Avatar style={{backgroundColor: "rgb(38 165 43)"}}>
-                                        <MonetizationOn />
-                                    </Avatar>
-                                </ListItemAvatar>
-                                <ListItemText>{Math.ceil(ammount * 5)}</ListItemText>
-                            </ListItem>
-                        </List>
-                        <div style={{padding: "10px"}}>
-                            <Button className={classes.button} variant="contained" color="inherit" fullWidth size="medium" disabled={ammount === '' || reference === ''} onClick={() => submitScore()}>Pontuar</Button>
-                        </div>
-                    </Paper>
-                </Container>
-            )}
+                    )}
+                </>
+                )}
             <Fab/>
         </div>
     )
