@@ -1,9 +1,11 @@
 import React, { useEffect, useState } from 'react'
 import moment from 'moment';
 import { 
+    createTheme,
     makeStyles,
     Paper,
-    Typography
+    Typography,
+    ThemeProvider
  } from '@material-ui/core';
 import {
     Timeline,
@@ -11,10 +13,8 @@ import {
     TimelineSeparator,
     TimelineConnector,
     TimelineContent,
-    TimelineOppositeContent,
     TimelineDot,
-} from '@material-ui/lab'
-import { Add, Remove } from '@material-ui/icons';   
+} from '@material-ui/lab' 
 import { AppBar, Fab } from '../../Components';
 import { UserService } from '../../Services';
 
@@ -23,6 +23,18 @@ const useStyles = makeStyles((theme) => ({
       padding: '6px 16px',
     },
 }));
+
+const theme = createTheme({
+    overrides: {
+        MuiTimelineItem: {
+          missingOppositeContent: {
+            "&:before": {
+              display: "none"
+            }
+          }
+        }
+      }
+});
 
 const History = () => {
     const [history, setHistory] = useState([])
@@ -45,28 +57,28 @@ const History = () => {
         <div>
             <AppBar/>
             <div>
-                <Timeline align="alternate">
+                <Timeline align="left">
                     {history.map(element => (
-                        <TimelineItem>
-                            <TimelineOppositeContent>
-                                <Typography variant="body2" color="textSecondary">
-                                    {moment(element.create_at).format('DD/MM/YYYY - HH:MM')}
-                                </Typography>
-                            </TimelineOppositeContent>
-                            <TimelineSeparator>
-                                <TimelineDot color={element. product_id ? "secondary" : "primary"}/>
-                                <TimelineConnector />
-                            </TimelineSeparator>
-                            <TimelineContent>
-                                <Paper variant="outlined" elevation={3} className={classes.paper}>
-                                    <Typography variant="h6" component="h2">
-                                        {element.client}
+                        <ThemeProvider theme={theme}>
+                            <TimelineItem>
+                                <TimelineSeparator>
+                                    <TimelineDot color={element. product_id ? "secondary" : "primary"}/>
+                                    <TimelineConnector />
+                                </TimelineSeparator>
+                                <TimelineContent>
+                                    <Paper variant="outlined" elevation={3} className={classes.paper}>
+                                        <Typography variant="h6" component="h2">
+                                            {element.client}
+                                        </Typography>
+                                        <Typography>{element.product}</Typography>
+                                        <Typography variant="overline">{element.amount}</Typography>
+                                    </Paper>
+                                    <Typography variant="body2" color="textSecondary">
+                                        {moment(element.create_at).format('DD/MM/YYYY - HH:MM')}
                                     </Typography>
-                                    <Typography>{element.product}</Typography>
-                                    <Typography variant="overline">{element.amount}</Typography>
-                                </Paper>
-                            </TimelineContent>
-                        </TimelineItem>
+                                </TimelineContent>
+                            </TimelineItem>
+                        </ThemeProvider>
                     ))}
                 </Timeline>
             </div>
