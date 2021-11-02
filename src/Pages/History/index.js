@@ -15,7 +15,7 @@ import {
     TimelineContent,
     TimelineDot,
 } from '@material-ui/lab' 
-import { AppBar, Fab } from '../../Components';
+import { AppBar, Fab, Backdrop } from '../../Components';
 import { UserService } from '../../Services';
 
 const useStyles = makeStyles((theme) => ({
@@ -37,17 +37,19 @@ const theme = createTheme({
 });
 
 const History = () => {
-    const [history, setHistory] = useState([])
+    const [history, setHistory] = useState([]);
+    const [isLoading, setIsLoading] = useState(true);
     const classes = useStyles();
 
     useEffect(() => {
         const fetchHistory = async () => {
             try {
                 const { data } = await UserService.getHistory();
-                console.log(data)
                 setHistory(data.data);
+                setIsLoading(false)
             } catch (error) {
                 console.log(error);
+                setIsLoading(false)
             }
         }
         fetchHistory();
@@ -56,6 +58,7 @@ const History = () => {
     return (
         <div>
             <AppBar/>
+            <Backdrop open={isLoading}/>
             <div>
                 <Timeline align="left">
                     {history.map(element => (
