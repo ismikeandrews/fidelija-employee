@@ -87,8 +87,10 @@ const History = () => {
                                                 <Typography variant="h6" component="h2">
                                                     {element.client}
                                                 </Typography>
-                                                <Typography>Ref: {element.transaction}</Typography>
-                                                <Typography variant="body1" color="textSecondary">Pontos: {element.amount}</Typography>
+                                                <Typography variant="body1" color="textSecondary">
+                                                    <span style={{marginRight: '15px'}}>Pontos: {element.amount}</span>
+                                                    <span>Ref: {element.transaction}</span>
+                                                </Typography>
                                             </Paper>
                                             <Typography variant="body2" color="textSecondary">
                                                 {moment(element.update_at).format('DD/MM/YYYY - HH:MM')}
@@ -107,7 +109,7 @@ const History = () => {
                                 <ThemeProvider key={element.id} theme={theme}>
                                     <TimelineItem>
                                         <TimelineSeparator>
-                                            <TimelineDot color="secondaryu"/>
+                                            <TimelineDot color="secondary"/>
                                             <TimelineConnector />
                                         </TimelineSeparator>
                                         <TimelineContent>
@@ -116,14 +118,12 @@ const History = () => {
                                                     {element.client}
                                                 </Typography>
                                                 <Typography>{element.product}</Typography>
-                                                
                                                 <Typography variant="body1" color="textSecondary">
-                                                    <span style={{marginRight: '15px'}}>Pontos: {element.amount}</span>
-                                                    <span>Ref: {element.transaction}</span>
+                                                    Pontos: {element.amount}
                                                 </Typography>
                                             </Paper>
                                             <Typography variant="body2" color="textSecondary">
-                                                {moment(element.update_at).format('DD/MM/YYYY - HH:MM')}
+                                                {moment(element.create_at).format('DD/MM/YYYY - HH:MM')}
                                             </Typography>
                                         </TimelineContent>
                                     </TimelineItem>
