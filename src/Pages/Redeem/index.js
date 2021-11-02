@@ -32,15 +32,17 @@ const Redeem = () => {
         if (e.key === 'Enter') {
             setIsLoading(true);
             try {
-                console.log(id)
                 const { data } = await VoucherService.getVoucher(id);
-                console.log(data)
                 setVoucher(data);
                 setIsLoading(false);
+                if (!data) {
+                    setDialogText('Cupom não encontrado.');
+                    setToggleDialog(true);
+                }
             } catch (error) {
                 console.log(error);
                 setIsLoading(false);
-                setDialogText('Cupom não encontrado.');
+                setDialogText('Ocorreu um erro, tente novamente.');
                 setToggleDialog(true);
             }
         }
@@ -74,15 +76,11 @@ const Redeem = () => {
                     <Divider/>
                 </div>
                 <Grid className={classes.gridContainer} container spacing={3} direction="column" justifyContent="center">
-                    {/* <Grid item className={classes.gridContainer} xs={12}>
+                    <Grid item className={classes.gridContainer} xs={12}>
                         <Paper variant="outlined" className={classes.paper}>
-                            <InputMask mask="9-99-99_9999999999" maskChar="" value={id} onChange={(e) => setId(e.target.value)} onKeyPress={(e) => fetchData(e)} disabled>
-                                {props => (
-                                    <TextField {...props} fullWidth variant="outlined" label="Código de resgate" margin="normal" type="text"/>
-                                )}
-                            </InputMask>
+                            <TextField fullWidth variant="outlined" label="Código de resgate" margin="normal" type="text" value={id} onChange={(e) => setId(e.target.value)} onKeyPress={(e) => fetchData(e)}/>
                         </Paper>
-                    </Grid> */}
+                    </Grid>
                     {voucher && (
                         <Grid item xs={12}>
                             <Paper variant="outlined">
