@@ -5,7 +5,10 @@ import {
     makeStyles,
     Paper,
     Typography,
-    ThemeProvider
+    ThemeProvider,
+    Tab,
+    Tabs,
+    Divider
  } from '@material-ui/core';
 import {
     Timeline,
@@ -37,15 +40,19 @@ const theme = createTheme({
 });
 
 const History = () => {
-    const [history, setHistory] = useState([]);
+    const [redeemHistory, setRedeemHistory] = useState([]);
+    const [pointsHistory, setPointsHistory] = useState([]);
     const [isLoading, setIsLoading] = useState(true);
+    const [tabValue, setTabValue] = useState(0)
     const classes = useStyles();
 
     useEffect(() => {
         const fetchHistory = async () => {
             try {
-                const { data } = await UserService.getHistory();
-                setHistory(data.data);
+                const redeemRes = await UserService.getRedeemHistory();
+                const pointsRes = await UserService.getPointsHistory();
+                setRedeemHistory(redeemRes.data.data);
+                setPointsHistory(pointsRes.data.data);
                 setIsLoading(false)
             } catch (error) {
                 console.log(error);
@@ -60,30 +67,71 @@ const History = () => {
             <AppBar/>
             <Backdrop open={isLoading}/>
             <div>
-                <Timeline align="left">
-                    {history.map(element => (
-                        <ThemeProvider theme={theme}>
-                            <TimelineItem>
-                                <TimelineSeparator>
-                                    <TimelineDot color={element. product_id ? "secondary" : "primary"}/>
-                                    <TimelineConnector />
-                                </TimelineSeparator>
-                                <TimelineContent>
-                                    <Paper variant="outlined" elevation={3} className={classes.paper}>
-                                        <Typography variant="h6" component="h2">
-                                            {element.client}
-                                        </Typography>
-                                        <Typography>{element.product}</Typography>
-                                        <Typography variant="overline">{element.amount}</Typography>
-                                    </Paper>
-                                    <Typography variant="body2" color="textSecondary">
-                                        {moment(element.create_at).format('DD/MM/YYYY - HH:MM')}
-                                    </Typography>
-                                </TimelineContent>
-                            </TimelineItem>
-                        </ThemeProvider>
-                    ))}
-                </Timeline>
+                <Tabs value={tabValue} onChange={(e, v) => setTabValue(v)} centered>
+                    <Tab label="Pontuações"/>
+                    <Tab label="Resgates"/>
+                </Tabs>
+                <Divider/>
+                <div role="tabpanel" hidden={tabValue !== 0} id={`full-width-tabpanel-${0}`}>
+                    {tabValue === 0 && (
+                        <Timeline align="left">
+                            {pointsHistory.map(element => (
+                                <ThemeProvider key={element.id} theme={theme}>
+                                    <TimelineItem>
+                                        <TimelineSeparator>
+                                            <TimelineDot color="primary"/>
+                                            <TimelineConnector />
+                                        </TimelineSeparator>
+                                        <TimelineContent>
+                                            <Paper variant="outlined" elevation={3} className={classes.paper}>
+                                                <Typography variant="h6" component="h2">
+                                                    {element.client}
+                                                </Typography>
+                                                <Typography>Ref: {element.transaction}</Typography>
+                                                <Typography variant="body1" color="textSecondary">Pontos: {element.amount}</Typography>
+                                            </Paper>
+                                            <Typography variant="body2" color="textSecondary">
+                                                {moment(element.update_at).format('DD/MM/YYYY - HH:MM')}
+                                            </Typography>
+                                        </TimelineContent>
+                                    </TimelineItem>
+                                </ThemeProvider>
+                            ))}
+                        </Timeline>
+                    )}
+                </div>
+                <div role="tabpanel" hidden={tabValue !== 1} id={`full-width-tabpanel-${1}`}>
+                    {tabValue === 1 && (
+                        <Timeline align="left">
+                            {redeemHistory.map(element => (
+                                <ThemeProvider key={element.id} theme={theme}>
+                                    <TimelineItem>
+                                        <TimelineSeparator>
+                                            <TimelineDot color="secondaryu"/>
+                                            <TimelineConnector />
+                                        </TimelineSeparator>
+                                        <TimelineContent>
+                                            <Paper variant="outlined" elevation={3} className={classes.paper}>
+                                                <Typography variant="h6" component="h2">
+                                                    {element.client}
+                                                </Typography>
+                                                <Typography>{element.product}</Typography>
+                                                
+                                                <Typography variant="body1" color="textSecondary">
+                                                    <span style={{marginRight: '15px'}}>Pontos: {element.amount}</span>
+                                                    <span>Ref: {element.transaction}</span>
+                                                </Typography>
+                                            </Paper>
+                                            <Typography variant="body2" color="textSecondary">
+                                                {moment(element.update_at).format('DD/MM/YYYY - HH:MM')}
+                                            </Typography>
+                                        </TimelineContent>
+                                    </TimelineItem>
+                                </ThemeProvider>
+                            ))}
+                        </Timeline>
+                    )}
+                </div>
             </div>
             <Fab/>
         </div>

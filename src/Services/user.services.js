@@ -16,8 +16,12 @@ const UserService = {
         const endpoint = `${url}api/user/${id}`;
         return axios.get(endpoint, AuthStr);
     },
-    async getHistory(){
-        const endpoint = `${url}api/employees/history`
+    async getRedeemHistory(){
+        const endpoint = `${url}api/employees/redeem/history`
+        return axios.get(endpoint, AuthStr)
+    },
+    async getPointsHistory(){
+        const endpoint = `${url}api/employees/points/history`
         return axios.get(endpoint, AuthStr)
     }
 }
