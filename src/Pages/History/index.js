@@ -51,6 +51,8 @@ const History = () => {
             try {
                 const redeemRes = await UserService.getRedeemHistory();
                 const pointsRes = await UserService.getPointsHistory();
+                console.log("points", pointsRes.data)
+                console.log("redeem", redeemRes.data)
                 setRedeemHistory(redeemRes.data.data);
                 setPointsHistory(pointsRes.data.data);
                 setIsLoading(false)
@@ -93,7 +95,7 @@ const History = () => {
                                                 </Typography>
                                             </Paper>
                                             <Typography variant="body2" color="textSecondary">
-                                                {moment(element.update_at).format('DD/MM/YYYY - HH:MM')}
+                                                {moment(element.created_at).format('DD/MM/YYYY - HH:mm')}
                                             </Typography>
                                         </TimelineContent>
                                     </TimelineItem>
@@ -123,7 +125,7 @@ const History = () => {
                                                 </Typography>
                                             </Paper>
                                             <Typography variant="body2" color="textSecondary">
-                                                {moment(element.create_at).format('DD/MM/YYYY - HH:MM')}
+                                                {moment(element.created_at).format('DD/MM/YYYY - HH:mm')}
                                             </Typography>
                                         </TimelineContent>
                                     </TimelineItem>

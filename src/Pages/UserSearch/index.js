@@ -78,8 +78,8 @@ const UserSearch = () => {
                         <Container maxWidth="lg">
                             <Paper variant="outlined">
                                 <div className={classes.inputs}>
-                                    <TextField fullWidth variant="outlined" label="Valor da compra" margin="normal" name="valor" value={ammount} onChange={(e) => setAmmount(e.target.value)}/>
-                                    <TextField fullWidth variant="outlined" label="Referencia" margin="normal" name="valor" value={reference} onChange={(e) => setReference(e.target.value)}/>
+                                    <TextField fullWidth type="number" variant="outlined" label="Valor da compra" margin="normal" name="valor" value={ammount} onChange={(e) => setAmmount(e.target.value)}/>
+                                    <TextField fullWidth variant="outlined" label="Referencia" margin="normal" name="referencia" value={reference} onChange={(e) => setReference(e.target.value)}/>
                                 </div>
                                 <List dense={false}>
                                     <ListItem>

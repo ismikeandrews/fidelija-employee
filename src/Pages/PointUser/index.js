@@ -91,8 +91,8 @@ const PointUser = () => {
                             </InputMask>
                             {user && (
                                 <>
-                                    <TextField fullWidth variant="outlined" label="Valor da compra" margin="normal" name="valor" value={ammount} onChange={(e) => setAmmount(e.target.value)}/>
-                                    <TextField fullWidth variant="outlined" label="Referência" margin="normal" name="valor" value={reference} onChange={(e) => setReference(e.target.value)}/>
+                                    <TextField fullWidth type="number" variant="outlined" label="Valor da compra" margin="normal" name="valor" value={ammount} onChange={(e) => setAmmount(e.target.value)}/>
+                                    <TextField fullWidth variant="outlined" label="Referência" margin="normal" name="referencia" value={reference} onChange={(e) => setReference(e.target.value)}/>
                                 </>
                             )}
                         </Paper>
