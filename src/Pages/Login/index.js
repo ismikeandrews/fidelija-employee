@@ -15,6 +15,7 @@ import LockOutlinedIcon from '@material-ui/icons/LockOutlined';
 import { Backdrop, Snackbar } from '../../Components';
 import { AuthService } from '../../Services'
 import { styles } from './login.elements';
+import { Logo } from '../../Assets';
 
 const Login = () => {
     const [email, setEmail] = useState('');
@@ -61,16 +62,13 @@ const Login = () => {
                 {infoMsg}
             </Snackbar>
             <div className={classes.paper}>
-                <Avatar className={classes.avatar}>
-                    <LockOutlinedIcon />
-                </Avatar>
+                <img src={Logo} alt="Fidelijá" className={classes.logo}/>
                 <Typography component="h1" variant="h5">
                     Login de Funcionários
                 </Typography>
                 <div className={classes.form} >
                     <TextField variant="outlined" margin="normal" required fullWidth label="Email" name="email" type="email" value={email} onChange={(e) => setEmail(e.target.value)}/>
                     <TextField variant="outlined" margin="normal" required fullWidth name="password" label="Senha" type="password" value={password} onChange={(e) => setPassword(e.target.value)}/>
-                    <FormControlLabel control={<Checkbox value="remember" color="primary" />} label="Lembrar-me"/>
                     <Button fullWidth variant="contained" color="primary" className={classes.submit} onClick={() => submitLogin()}>
                         Entrar
                     </Button>
@@ -78,11 +76,6 @@ const Login = () => {
                         <Grid item xs>
                             <Link href="#" variant="body2">
                                 Esqueceu a senha?
-                            </Link>
-                        </Grid>
-                        <Grid item>
-                            <Link href="#" variant="body2">
-                                Ainda não possui uma conta?
                             </Link>
                         </Grid>
                     </Grid>

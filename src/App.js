@@ -4,7 +4,7 @@ import { Routes } from './Routes';
 
 function App() {
   return (
-    <div style={{overflow: "hidden"}}>
+    <div style={{overflow: "hidden", position: 'relative'}}>
       <CssBaseline/>
       <Routes/>
     </div>
