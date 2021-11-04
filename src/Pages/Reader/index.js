@@ -1,4 +1,4 @@
-import React, { useRef, useState } from 'react'
+import React, { useRef } from 'react'
 import { Container, Paper, Typography, Divider, Button } from '@material-ui/core';
 import QrReader from 'react-qr-reader';
 import { AppBar } from '../../Components';

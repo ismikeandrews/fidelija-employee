@@ -16,12 +16,12 @@ const UserService = {
         const endpoint = `${url}api/user/${id}`;
         return axios.get(endpoint, AuthStr);
     },
-    async getRedeemHistory(){
-        const endpoint = `${url}api/employees/redeem/history`
+    async getRedeemHistory(page){
+        const endpoint = `${url}api/employees/redeem/history?page=${page}`
         return axios.get(endpoint, AuthStr)
     },
-    async getPointsHistory(){
-        const endpoint = `${url}api/employees/points/history`
+    async getPointsHistory(page){
+        const endpoint = `${url}api/employees/points/history?page=${page}`
         return axios.get(endpoint, AuthStr)
     }
 }

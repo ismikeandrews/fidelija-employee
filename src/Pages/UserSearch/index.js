@@ -41,7 +41,7 @@ const UserSearch = () => {
             }
         }
         fetchUser()
-    }, [])
+    }, [id])
 
 
     const submitScore = async () => {
@@ -129,7 +129,7 @@ const UserSearch = () => {
                     ) : (
                         <div className={classes.notFound}>
                             <Container maxWidth="lg">
-                                <img src={VoidSvg} width="250"/>
+                                <img src={VoidSvg} width="250" alt="void"/>
                                 <Typography variant="h6" className={classes.notFoundMsg}>
                                     O usuário não foi encontrado
                                 </Typography>               

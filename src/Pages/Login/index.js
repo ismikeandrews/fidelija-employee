@@ -5,13 +5,9 @@ import {
     Button,
     TextField,
     Container,
-    Avatar,
-    FormControlLabel,
-    Checkbox,
     Link,
     Box
 } from '@material-ui/core';
-import LockOutlinedIcon from '@material-ui/icons/LockOutlined';
 import { Backdrop, Snackbar } from '../../Components';
 import { AuthService } from '../../Services'
 import { styles } from './login.elements';

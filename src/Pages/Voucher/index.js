@@ -36,7 +36,7 @@ const Voucher = () => {
             }
         }  
         fetchVoucher()
-    }, []);
+    }, [id]);
 
 
     const completeVoucher = async () => {
@@ -113,7 +113,7 @@ const Voucher = () => {
                     ) : (
                         <div className={classes.notFound}>
                             <Container maxWidth="lg">
-                                <img src={VoidSvg} width="250"/>
+                                <img src={VoidSvg} width="250"  alt="void"/>
                                 <Typography variant="h6" className={classes.notFoundMsg}>
                                     O cupom inserido é inválido ou não existe.
                                 </Typography>               
