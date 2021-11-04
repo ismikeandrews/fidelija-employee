@@ -32,7 +32,7 @@ const useStyles = makeStyles((theme) => ({
         display: 'flex',
         justifyContent: 'center',
         marginTop: '20px', 
-        marginBottom: '100px'
+        marginBottom: '80px'
     },
     notFound:{
         textAlign: 'center',
@@ -108,112 +108,116 @@ const History = () => {
                     <Tab label="Resgates"/>
                 </Tabs>
                 <Divider/>
-                <div role="tabpanel" hidden={tabValue !== 0} id={`full-width-tabpanel-${0}`}>
-                    {tabValue === 0 && (
-                        <div>
-                            {pointsHistory.length > 0 ? (
+                {isLoading || (
+                <div>
+                    <div role="tabpanel" hidden={tabValue !== 0} id={`full-width-tabpanel-${0}`}>
+                        {tabValue === 0 && (
                             <div>
-                                <Timeline align="left">
-                                    {pointsHistory.map(element => (
-                                        <ThemeProvider key={element.id} theme={theme}>
-                                            <TimelineItem>
-                                                <TimelineSeparator>
-                                                    <TimelineDot color="primary"/>
-                                                    <TimelineConnector />
-                                                </TimelineSeparator>
-                                                <TimelineContent>
-                                                    <Paper variant="outlined" elevation={3} className={classes.paper}>
-                                                        <Typography variant="h6" component="h2">
-                                                            {element.client}
+                                {pointsHistory.length > 0 ? (
+                                <div>
+                                    <Timeline align="left">
+                                        {pointsHistory.map(element => (
+                                            <ThemeProvider key={element.id} theme={theme}>
+                                                <TimelineItem>
+                                                    <TimelineSeparator>
+                                                        <TimelineDot color="primary"/>
+                                                        <TimelineConnector />
+                                                    </TimelineSeparator>
+                                                    <TimelineContent>
+                                                        <Paper variant="outlined" elevation={3} className={classes.paper}>
+                                                            <Typography variant="h6" component="h2">
+                                                                {element.client}
+                                                            </Typography>
+                                                            <Typography variant="body1" color="textSecondary">
+                                                                <span style={{marginRight: '15px'}}>Pontos: {element.amount}</span>
+                                                                <span>Ref: {element.transaction}</span>
+                                                            </Typography>
+                                                        </Paper>
+                                                        <Typography variant="body2" color="textSecondary">
+                                                            {moment(element.created_at).format('DD/MM/YYYY - HH:mm')}
                                                         </Typography>
-                                                        <Typography variant="body1" color="textSecondary">
-                                                            <span style={{marginRight: '15px'}}>Pontos: {element.amount}</span>
-                                                            <span>Ref: {element.transaction}</span>
-                                                        </Typography>
-                                                    </Paper>
-                                                    <Typography variant="body2" color="textSecondary">
-                                                        {moment(element.created_at).format('DD/MM/YYYY - HH:mm')}
-                                                    </Typography>
-                                                </TimelineContent>
-                                            </TimelineItem>
-                                        </ThemeProvider>
-                                    ))}
-                                </Timeline>
-                                <Pagination
-                                className={classes.pagination}
-                                page={pointsPage}
-                                count={pointsLastPage} 
-                                color="primary" 
-                                onChange={(e, page) => {
-                                    fetchPoints(page)
-                                }}/>
+                                                    </TimelineContent>
+                                                </TimelineItem>
+                                            </ThemeProvider>
+                                        ))}
+                                    </Timeline>
+                                    <Pagination
+                                    className={classes.pagination}
+                                    page={pointsPage}
+                                    count={pointsLastPage} 
+                                    color="primary" 
+                                    onChange={(e, page) => {
+                                        fetchPoints(page)
+                                    }}/>
+                                </div>
+                                ) : (
+                                <div className={classes.notFound}>
+                                    <Container maxWidth="lg">
+                                        <img src={VoidSvg} width="250" alt="void"/>
+                                        <Typography variant="h6" className={classes.notFoundMsg}>
+                                            Sem registro de pontuação
+                                        </Typography>               
+                                    </Container>
+                                </div>
+                                )}
                             </div>
-                            ) : (
-                            <div className={classes.notFound}>
-                                <Container maxWidth="lg">
-                                    <img src={VoidSvg} width="250" alt="void"/>
-                                    <Typography variant="h6" className={classes.notFoundMsg}>
-                                        Sem registro de pontuação
-                                    </Typography>               
-                                </Container>
-                            </div>
-                            )}
-                        </div>
-                    )}
-                </div>
-                <div role="tabpanel" hidden={tabValue !== 1} id={`full-width-tabpanel-${1}`}>
-                    {tabValue === 1 && (
-                        <div>
-                            {redeemHistory.length > 0 ? (
+                        )}
+                    </div>
+                    <div role="tabpanel" hidden={tabValue !== 1} id={`full-width-tabpanel-${1}`}>
+                        {tabValue === 1 && (
                             <div>
-                                <Timeline align="left">
-                                    {redeemHistory.map(element => (
-                                        <ThemeProvider key={element.id} theme={theme}>
-                                            <TimelineItem>
-                                                <TimelineSeparator>
-                                                    <TimelineDot color="secondary"/>
-                                                    <TimelineConnector />
-                                                </TimelineSeparator>
-                                                <TimelineContent>
-                                                    <Paper variant="outlined" elevation={3} className={classes.paper}>
-                                                        <Typography variant="h6" component="h2">
-                                                            {element.client}
+                                {redeemHistory.length > 0 ? (
+                                <div>
+                                    <Timeline align="left">
+                                        {redeemHistory.map(element => (
+                                            <ThemeProvider key={element.id} theme={theme}>
+                                                <TimelineItem>
+                                                    <TimelineSeparator>
+                                                        <TimelineDot color="secondary"/>
+                                                        <TimelineConnector />
+                                                    </TimelineSeparator>
+                                                    <TimelineContent>
+                                                        <Paper variant="outlined" elevation={3} className={classes.paper}>
+                                                            <Typography variant="h6" component="h2">
+                                                                {element.client}
+                                                            </Typography>
+                                                            <Typography>{element.product}</Typography>
+                                                            <Typography variant="body1" color="textSecondary">
+                                                                Pontos: {element.amount}
+                                                            </Typography>
+                                                        </Paper>
+                                                        <Typography variant="body2" color="textSecondary">
+                                                            {moment(element.created_at).format('DD/MM/YYYY - HH:mm')}
                                                         </Typography>
-                                                        <Typography>{element.product}</Typography>
-                                                        <Typography variant="body1" color="textSecondary">
-                                                            Pontos: {element.amount}
-                                                        </Typography>
-                                                    </Paper>
-                                                    <Typography variant="body2" color="textSecondary">
-                                                        {moment(element.created_at).format('DD/MM/YYYY - HH:mm')}
-                                                    </Typography>
-                                                </TimelineContent>
-                                            </TimelineItem>
-                                        </ThemeProvider>
-                                    ))}
-                                </Timeline>
-                                <Pagination
-                                className={classes.pagination}
-                                page={redeemPage}
-                                count={redeemLastPage} 
-                                color="secondary" 
-                                onChange={(e, page) => {
-                                    fetchRedeem(page)
-                                }}/>
+                                                    </TimelineContent>
+                                                </TimelineItem>
+                                            </ThemeProvider>
+                                        ))}
+                                    </Timeline>
+                                    <Pagination
+                                    className={classes.pagination}
+                                    page={redeemPage}
+                                    count={redeemLastPage} 
+                                    color="secondary" 
+                                    onChange={(e, page) => {
+                                        fetchRedeem(page)
+                                    }}/>
+                                </div>
+                                ) : (
+                                <div className={classes.notFound}>
+                                    <Container maxWidth="lg">
+                                        <img src={VoidSvg} width="250" alt="void"/>
+                                        <Typography variant="h6" className={classes.notFoundMsg}>
+                                            Sem registro de pontuação
+                                        </Typography>               
+                                    </Container>
+                                </div>
+                                )}
                             </div>
-                            ) : (
-                            <div className={classes.notFound}>
-                                <Container maxWidth="lg">
-                                    <img src={VoidSvg} width="250" alt="void"/>
-                                    <Typography variant="h6" className={classes.notFoundMsg}>
-                                        Sem registro de pontuação
-                                    </Typography>               
-                                </Container>
-                            </div>
-                            )}
-                        </div>
-                    )}
+                        )}
+                    </div>
                 </div>
+                )}
             </div>
             <Fab/>
         </div>
