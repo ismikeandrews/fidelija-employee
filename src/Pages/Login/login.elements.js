@@ -2,6 +2,7 @@ import { makeStyles } from '@material-ui/core';
 
 export const styles = makeStyles(theme => ({
     paper: {
+        padding: '25px',
         marginTop: theme.spacing(8),
         display: 'flex',
         flexDirection: 'column',

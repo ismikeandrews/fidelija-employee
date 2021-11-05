@@ -7,7 +7,8 @@ import {
     TextField,
     Container,
     Link as MuiLink,
-    Box
+    Box,
+    Paper
 } from '@material-ui/core';
 import { Backdrop, Snackbar } from '../../Components';
 import { AuthService } from '../../Services'
@@ -58,7 +59,7 @@ const Login = () => {
             <Snackbar toggleSnack={toggleFailureSnack} time={4500} onClose={() => setToggleFailureSnack(false)} color="error">
                 {infoMsg}
             </Snackbar>
-            <div className={classes.paper}>
+            <Paper variant="outlined" className={classes.paper}>
                 <img src={Logo} alt="Fidelijá" className={classes.logo}/>
                 <Typography component="h1" variant="h5">
                     Login de Funcionários
@@ -77,7 +78,7 @@ const Login = () => {
                         </Grid>
                     </Grid>
                 </div>
-            </div>
+            </Paper>
             <Box mt={8}>
                 <Typography variant="body2" color="textSecondary" align="center">
                     {'Copyright © '}
