@@ -1,11 +1,12 @@
-import React, { useState } from 'react'
+import React, { useState } from 'react';
+import { Link } from 'react-router-dom';
 import { 
     Grid,
     Typography,
     Button,
     TextField,
     Container,
-    Link,
+    Link as MuiLink,
     Box
 } from '@material-ui/core';
 import { Backdrop, Snackbar } from '../../Components';
@@ -70,9 +71,9 @@ const Login = () => {
                     </Button>
                     <Grid container>
                         <Grid item xs>
-                            <Link href="#" variant="body2">
+                            <MuiLink component={Link} to="/recover" variant="body2">
                                 Esqueceu a senha?
-                            </Link>
+                            </MuiLink>
                         </Grid>
                     </Grid>
                 </div>
@@ -80,9 +81,9 @@ const Login = () => {
             <Box mt={8}>
                 <Typography variant="body2" color="textSecondary" align="center">
                     {'Copyright © '}
-                    <Link color="inherit" href="https://parceiro.fidelija.com.br/">
+                    <MuiLink color="inherit" href="https://parceiro.fidelija.com.br/">
                         Fidelijá
-                    </Link>{' '}
+                    </MuiLink>{' '}
                     {new Date().getFullYear()}
                     {'.'}
                 </Typography>

@@ -70,6 +70,11 @@ const AuthService = {
             }
         }else {
         }
+    },
+
+    async recoverPassword(data){
+        const endpoint = `${url}api/user/recovery`;
+        return axios.post(endpoint, data);
     }
 }
 

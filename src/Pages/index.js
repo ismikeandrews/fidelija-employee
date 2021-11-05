@@ -5,3 +5,4 @@ export { default as Voucher } from './Voucher';
 export { default as Reader } from './Reader';
 export { default as History } from './History';
 export { default as Redeem } from './Redeem';
+export { default as Recover } from './Recover';

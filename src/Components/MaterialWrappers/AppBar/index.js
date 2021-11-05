@@ -42,8 +42,8 @@ const AppBar = (props) => {
                         Painel do funcionário
                     </Typography>
                     <div>
-                    <IconButton onClick={() => setOpen(true)} ref={anchorRef}>
-                        <Avatar src={process.env.REACT_APP_BASE_URL + AuthService.getLoggedUser().photo}/>
+                    <IconButton onClick={() => setOpen(true)} ref={anchorRef} name="Profile button">
+                        <Avatar src={process.env.REACT_APP_BASE_URL + AuthService.getLoggedUser().photo} alt="profile"/>
                     </IconButton>
                         <Menu anchorEl={anchorRef.current} open={open} onClose={() => setOpen(false)}>
                             <MenuItem component={Button} endIcon={<ExitToApp/>} color="secondary" onClick={() => logout()}>Sair</MenuItem>

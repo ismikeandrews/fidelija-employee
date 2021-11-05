@@ -3,7 +3,7 @@ import { BrowserRouter, Switch, Route, Redirect } from 'react-router-dom';
 import { AuthService } from '../Services';
 import Unprotected from './unprotected.routes';
 import Protected from './protected.routes';
-import { Login, PointUser, UserSearch, Voucher, Reader, History, Redeem } from '../Pages';
+import { Login, PointUser, UserSearch, Voucher, Reader, History, Redeem, Recover } from '../Pages';
 
 const Index = () => {
     return <Redirect to="/"/>
@@ -23,7 +23,10 @@ const Routes = () => {
                         <Protected path="/point-user" component={PointUser}/>
                     </>
                 ) : (
-                    <Unprotected path="/" exact component={Login}/>
+                    <>
+                        <Unprotected path="/" exact component={Login}/>
+                        <Unprotected path="/recover" component={Recover}/>
+                    </>
                 )}
                 <Route path="*" exact component={Index}/>
             </Switch>
