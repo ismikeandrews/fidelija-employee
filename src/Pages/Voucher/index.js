@@ -22,6 +22,7 @@ const Voucher = () => {
     const [isLoading, setIsLoading] = useState(true);
     const [toggleDialog, setToggleDialog] = useState(false);
     const [dialogText, setDialogText] = useState('');
+    const [dialogTitle, setDialogTitle] = useState('')
     const {id} = useParams();
     const classes = Styles();
 
@@ -31,8 +32,15 @@ const Voucher = () => {
                 const { data } = await VoucherService.getVoucher(id);
                 setVoucher(data);
                 setIsLoading(false)
+                if(!data.is_valid){
+                    setDialogTitle('Voucher inválido');
+                    setDialogText(data.entrega)
+                    setDialogTitle(true);
+                }
             } catch (error) {
                 console.log(error);
+                setDialogText('Ocorreu um erro tente novamente');
+                setToggleDialog(true)
             }
         }  
         fetchVoucher()
@@ -60,7 +68,7 @@ const Voucher = () => {
         <div>
             <AppBar/>
             <Backdrop open={isLoading}/>
-            <Dialog open={toggleDialog} close={() => setToggleDialog(false)} text={dialogText}/>
+            <Dialog title={dialogTitle} open={toggleDialog} close={() => setToggleDialog(false)} text={dialogText}/>
             {isLoading || (
                 <>
                     {voucher ? (
@@ -103,11 +111,13 @@ const Voucher = () => {
                                         <ListItemText primary="Validade" secondary={voucher.limit_date}/>
                                     </ListItem>
                                 </List>
-                                <div style={{padding: "10px"}}>
-                                    <Button className={classes.button} fullWidth variant="contained" onClick={() => completeVoucher()}>
-                                        Confirmar
-                                    </Button>
-                                </div>
+                                {voucher.is_valid && (
+                                    <div style={{padding: "10px"}}>
+                                        <Button className={classes.button} fullWidth variant="contained" onClick={() => completeVoucher()}>
+                                            Confirmar
+                                        </Button>
+                                    </div>
+                                )}
                             </Paper>
                         </Container>
                     ) : (

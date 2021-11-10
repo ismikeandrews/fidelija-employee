@@ -11,7 +11,7 @@ import {
 const Dialog = (props) => {
     return (
         <MuiDialog open={props.open} onClose={props.close}>
-        <DialogTitle>Aviso</DialogTitle>
+        <DialogTitle>{props.title !== '' ? props.title : "Aviso"}</DialogTitle>
         <DialogContent>
           <DialogContentText>
             {props.text}
