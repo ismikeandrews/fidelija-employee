@@ -32,10 +32,10 @@ const Voucher = () => {
                 const { data } = await VoucherService.getVoucher(id);
                 setVoucher(data);
                 setIsLoading(false)
-                if(!data.is_valid){
-                    setDialogTitle('Voucher inválido');
+                 if (!data.is_valid) {
+                    setDialogTitle('Voucher inválido')
                     setDialogText(data.entrega)
-                    setDialogTitle(true);
+                    setToggleDialog(true);
                 }
             } catch (error) {
                 console.log(error);
